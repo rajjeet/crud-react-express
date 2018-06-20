@@ -1,8 +1,10 @@
 {
   "name": "plex-employees",
   "version": "0.1.0",
+  "license": "None provided",
   "private": true,
   "dependencies": {
+    "concurrently": "^3.6.0",
     "cors": "^2.8.4",
     "express": "^4.16.3",
     "nodemon": "^1.17.5",
