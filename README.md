@@ -12,8 +12,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Bonus
 
 1) Use a relational database to store the data (SQLite, MariaDB, Postgres)  
-2) Use [React Table](https://react-table.js.org)  
-3) Show use your design skills on the front-end  
+2) Edit/update employee data
+3) Use [React Table](https://react-table.js.org)  
+4) Show use your design skills on the front-end  
 
 You are not required to do any of the above bonus tasks. What we are more interested in is your ability to communicate your decisions. You are free to use whatever libraries that you want, but again be prepared to defend your decisions. 
 
