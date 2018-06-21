@@ -12,7 +12,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Bonus
 
 1) Use a relational database to store the data (SQLite, MariaDB, Postgres)  
-2) Edit/update employee data
+2) Edit/update employee data  
 3) Use [React Table](https://react-table.js.org)  
 4) Show use your design skills on the front-end  
 
