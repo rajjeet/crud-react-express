@@ -182,7 +182,7 @@ const StyledEmployeeForm = styled(EmployeeForm)`
         box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
         
         position: absolute;
-        top: 0;
+        top: 10%;
         left: 0;
         right: 0;
         background-color: white;
