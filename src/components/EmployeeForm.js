@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components';
+import Button from './Button'
 
 class EmployeeForm extends Component {
     constructor(props) {
@@ -98,7 +99,7 @@ class EmployeeForm extends Component {
                 <div onClick={e => e.stopPropagation()}>
                     <div>
                         <h3>Employee</h3>
-                        <button onClick={this.props.handleClose}>X</button>
+                        <Button onClick={this.props.handleClose}>X</Button>
                     </div>
                     <form onSubmit={this.handleSubmit}>
                         <input type={'hidden'} name={'id'} value={this.state.id}/>
@@ -148,8 +149,8 @@ class EmployeeForm extends Component {
                                    onChange={this.handleChange}
                             />
                         </div>
-                        <button type={'submit'} >Save</button>
-                        <button onClick={this.handleReset}>Reset</button>
+                        <Button type={'submit'} >Save</Button>
+                        <Button onClick={this.handleReset}>Reset</Button>
                     </form>
                 </div>
             </div>
@@ -219,21 +220,9 @@ const StyledEmployeeForm = styled(EmployeeForm)`
             box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
           }
         }
-        button {
-          box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-          font-size: 1.3em;
-          border-radius: 5px;
-          margin:0 0;
-          box-sizing: border-box;
-          cursor: pointer;
-          :hover {
-            transform:  translateY(-2px);
-            transition: .3s ease;
-          }
-        }
         button:first-of-type {
           padding: .25em 0;
-          width: 60%;
+          width: 55%;
           background-color: darkgreen;
           color: white;
         }
@@ -249,20 +238,25 @@ const StyledEmployeeForm = styled(EmployeeForm)`
       border-radius: 5px;
       padding: auto 4em;
       margin: 1em;
+      position: relative;
       h3 {
           display: inline-block;
-          width: 90%;
+          width: 80%;
           padding-left: 1em;
           box-sizing: border-box;
         }
       button {
-        margin: 1em;
         background-color: red;
         color: white;
         font-weight: bold;
         border: none;
         border-radius: 5px;
         cursor: pointer;
+        float: right;
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: .5em;
       }
     }
     

@@ -3,6 +3,7 @@ import ReactTable from 'react-table';
 import 'react-table/react-table.css'
 import EmployeeForm from "./EmployeeForm";
 import styled from 'styled-components';
+import Button from "./Button";
 
 class EmployeeList extends React.Component {
     constructor(props) {
@@ -71,7 +72,7 @@ class EmployeeList extends React.Component {
     };
 
     deselectRow = function (e) {
-        if (!['rt-td', 'row-modifier'].includes(e.target.className) && !this.state.isEmployeeFormVisible)
+        if (!e.target.className.match(/rt-td|row-modifier/) && !this.state.isEmployeeFormVisible)
             this.setState({selectedIndex: null, selectedId: null})
     };
 
@@ -143,19 +144,19 @@ class EmployeeList extends React.Component {
         return (
             <div className={this.props.className}>
                 <h1>Plexxis Employees</h1>
-                <button onClick={() => this.openEmployeeForm(null)}>
-                    Add New
-                </button>
-                <button className={'row-modifier'}
+                <Button onClick={() => this.openEmployeeForm(null)}>
+                    Add
+                </Button>
+                <Button className={'row-modifier'}
                         disabled={this.state.selectedIndex === null}
                         onClick={() => this.openEmployeeForm(this.state.selectedRow)}>
                     Edit
-                </button>
-                <button className={'row-modifier'}
+                </Button>
+                <Button className={'row-modifier'}
                         disabled={this.state.selectedIndex === null}
                         onClick={() => this.handleEmployeeDelete(this.state.selectedRow)}>
                     Delete
-                </button>
+                </Button>
                 <ReactTable data={employees} columns={columns} defaultPageSize={10}
                             getTrProps={this.getTrProps}
                 />
@@ -171,6 +172,25 @@ class EmployeeList extends React.Component {
 const StyledEmployeeList = styled(EmployeeList)`
   width: 80%;
   margin: auto;
+  > button {
+      :disabled {
+          opacity: .3;
+          transform: none;
+      }
+  }
+  > button:first-of-type {
+    background-color: green;
+    color: white;
+  }  
+  > button:nth-of-type(2) {
+    background-color: darkgoldenrod;
+    color: white;
+    
+  }  
+  > button:nth-of-type(3) {
+    background-color: darkred;
+    color: white;
+  }  
 `
 
 
