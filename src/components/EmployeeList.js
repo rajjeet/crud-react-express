@@ -83,32 +83,41 @@ class EmployeeList extends React.Component {
             {
                 Header: 'Id',
                 accessor: 'id',
+                headerClassName: 'table-header',
+                width: 60
             },
             {
                 Header: 'Name',
                 accessor: 'name',
+                headerClassName: 'table-header'
             },
             {
                 Header: 'Code',
                 accessor: 'code',
+                headerClassName: 'table-header'
             },
             {
                 Header: 'Profession',
                 accessor: 'profession',
+                headerClassName: 'table-header'
             },
             {
                 Header: 'City',
                 accessor: 'city',
+                headerClassName: 'table-header'
             },
             {
                 Header: 'Branch',
                 accessor: 'branch',
+                headerClassName: 'table-header'
             },
             {
                 id: 'assigned',
                 Header: 'Assigned',
                 accessor: 'assigned',
                 Cell: props => <span>{props.value ? "Yes" : "No"}</span>,
+                headerClassName: 'table-header',
+                width: 100
             },
         ]
         return (
