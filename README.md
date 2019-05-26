@@ -18,7 +18,7 @@ Create a simple but __impressive__ (looks good, works well, has intuitive design
 4) Use [React Table](https://react-table.js.org)  
 
 ## Getting Started
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). The front-end app runs off localhost:3000. The REST API is located in the /server folder and runs off localhost:8080. The data is being served from a JSON file located in the /server/data folder. Run `npm start` to start both servers.
+This project was bootstrapped with [Create React EmployeeList](https://github.com/facebookincubator/create-react-app). The front-end app runs off localhost:3000. The REST API is located in the /server folder and runs off localhost:8080. The data is being served from a JSON file located in the /server/data folder. Run `npm start` to start both servers.
 
 ## Getting it Done
 * You are free to use whatever libraries that you want. Be prepared to defend your decisions.
