@@ -103,7 +103,7 @@ function checkValidServiceWorker(swUrl) {
     })
     .catch(() => {
       console.log(
-        'No internet connection found. EmployeeList is running in offline mode.'
+        'No internet connection found. EmployeeListContainer is running in offline mode.'
       );
     });
 }

@@ -1,10 +1,10 @@
 import React from 'react';
 import 'react-table/react-table.css'
-import EmployeeList from "./components/EmployeeList";
+import EmployeeListContainer from "./components/EmployeeListContainer";
 import './App.css';
 
 function App() {
-    return <EmployeeList />
+    return <EmployeeListContainer />
 }
 
 export default App;

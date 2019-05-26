@@ -4,8 +4,9 @@ import 'react-table/react-table.css'
 import EmployeeForm from "./EmployeeFormContainer";
 import styled from 'styled-components';
 import Button from "./Button";
+import EmployeeListView from "./EmployeeListView";
 
-class EmployeeList extends React.Component {
+class EmployeeListContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -96,102 +97,21 @@ class EmployeeList extends React.Component {
     }
 
     render() {
-        const {
-            employees
-        } = this.state;
-
-        const columns = [
-            {
-                Header: 'Id',
-                accessor: 'id',
-                headerClassName: 'table-header',
-                width: 60
-            },
-            {
-                Header: 'Name',
-                accessor: 'name',
-                headerClassName: 'table-header'
-            },
-            {
-                Header: 'Code',
-                accessor: 'code',
-                headerClassName: 'table-header'
-            },
-            {
-                Header: 'Profession',
-                accessor: 'profession',
-                headerClassName: 'table-header'
-            },
-            {
-                Header: 'City',
-                accessor: 'city',
-                headerClassName: 'table-header'
-            },
-            {
-                Header: 'Branch',
-                accessor: 'branch',
-                headerClassName: 'table-header'
-            },
-            {
-                id: 'assigned',
-                Header: 'Assigned',
-                accessor: 'assigned',
-                Cell: props => <span>{props.value ? "Yes" : "No"}</span>,
-                headerClassName: 'table-header',
-                width: 100
-            },
-        ]
         return (
-            <div className={this.props.className}>
-                <h1>Plexxis Employees</h1>
-                <Button onClick={() => this.openEmployeeForm(null)}>
-                    Add
-                </Button>
-                <Button className={'row-modifier'}
-                        disabled={this.state.selectedIndex === null}
-                        onClick={() => this.openEmployeeForm(this.state.selectedRow)}>
-                    Edit
-                </Button>
-                <Button className={'row-modifier'}
-                        disabled={this.state.selectedIndex === null}
-                        onClick={() => this.handleEmployeeDelete(this.state.selectedRow)}>
-                    Delete
-                </Button>
-                <ReactTable data={employees} columns={columns} defaultPageSize={10}
-                            getTrProps={this.getTrProps}
-                />
-                {
-                    this.state.isEmployeeFormVisible &&
-                    <EmployeeForm id={this.state.id} handleSave={this.handleSave} handleClose={this.closeEmployeeForm}/>
-                }
-            </div>
+            <EmployeeListView
+                selectedIndex={this.state.selectedIndex}
+                selectedRow={this.state.selectedRow}
+                getTrProps={this.getTrProps}
+                employees={this.state.employees}
+                id={this.state.id}
+                handleSave={this.handleSave}
+                closeEmployeeForm={this.closeEmployeeForm}
+                isEmployeeFormVisible={this.state.isEmployeeFormVisible}
+                openEmployeeForm={this.openEmployeeForm}
+                handleEmployeeDelete={this.handleEmployeeDelete}
+            />
         );
     }
 }
 
-const StyledEmployeeList = styled(EmployeeList)`
-  width: 80%;
-  margin: auto;
-  > button {
-      :disabled {
-          opacity: .3;
-          transform: none;
-      }
-  }
-  > button:first-of-type {
-    background-color: green;
-    color: white;
-  }  
-  > button:nth-of-type(2) {
-    background-color: darkgoldenrod;
-    color: white;
-    
-  }  
-  > button:nth-of-type(3) {
-    background-color: darkred;
-    color: white;
-  }  
-`
-
-
-export default StyledEmployeeList;
+export default EmployeeListContainer;
