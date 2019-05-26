@@ -10,7 +10,8 @@
     "nodemon": "^1.17.5",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "react-scripts": "1.1.4"
+    "react-scripts": "1.1.4",
+    "react-table": "^6.10.0"
   },
   "scripts": {
     "start": "concurrently --kill-others \"node server\" \"npm run start:react-app\"",
