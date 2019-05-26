@@ -20,6 +20,7 @@ class EmployeeList extends React.Component {
         this.openEmployeeForm = this.openEmployeeForm.bind(this)
         this.closeEmployeeForm = this.closeEmployeeForm.bind(this);
         this.deselectRow = this.deselectRow.bind(this);
+        this.getTrProps = this.getTrProps.bind(this);
     }
 
     componentWillMount = () => {
@@ -29,11 +30,6 @@ class EmployeeList extends React.Component {
 
     componentWillUnmount() {
         document.removeEventListener('click', this.deselectRow)
-    }
-
-    deselectRow = function (e) {
-        if (!['rt-td', 'row-modifier'].includes(e.target.className) && !this.state.isEmployeeFormVisible)
-            this.setState({selectedIndex: null, selectedId: null})
     }
 
     getEmployees = function () {
@@ -66,13 +62,37 @@ class EmployeeList extends React.Component {
                 .then(() => this.getEmployees());
     };
 
+    openEmployeeForm = function (row = null) {
+        this.setState({id: row ? row.id : null, isEmployeeFormVisible: true})
+    };
+
     closeEmployeeForm = function () {
         this.setState({isEmployeeFormVisible: false})
     };
 
-    openEmployeeForm = function (row = null) {
-        this.setState({id: row ? row.id : null, isEmployeeFormVisible: true})
+    deselectRow = function (e) {
+        if (!['rt-td', 'row-modifier'].includes(e.target.className) && !this.state.isEmployeeFormVisible)
+            this.setState({selectedIndex: null, selectedId: null})
     };
+
+    getTrProps = function (state, rowInfo) {
+        if (rowInfo && rowInfo.row) {
+            return {
+                onClick: (e) => {
+                    this.setState({
+                        selectedIndex: rowInfo.index,
+                        selectedRow: rowInfo.row
+                    })
+                },
+                style: {
+                    background: rowInfo.index === this.state.selectedIndex ? '#00afec' : 'white',
+                    color: rowInfo.index === this.state.selectedIndex ? 'white' : 'black'
+                }
+            }
+        } else {
+            return {}
+        }
+    }
 
     render() {
         const {
@@ -137,24 +157,7 @@ class EmployeeList extends React.Component {
                     Delete
                 </button>
                 <ReactTable data={employees} columns={columns} defaultPageSize={10}
-                            getTrProps={(state, rowInfo) => {
-                                if (rowInfo && rowInfo.row) {
-                                    return {
-                                        onClick: (e) => {
-                                            this.setState({
-                                                selectedIndex: rowInfo.index,
-                                                selectedRow: rowInfo.row
-                                            })
-                                        },
-                                        style: {
-                                            background: rowInfo.index === this.state.selectedIndex ? '#00afec' : 'white',
-                                            color: rowInfo.index === this.state.selectedIndex ? 'white' : 'black'
-                                        }
-                                    }
-                                } else {
-                                    return {}
-                                }
-                            }}
+                            getTrProps={this.getTrProps}
                 />
                 {
                     this.state.isEmployeeFormVisible &&
