@@ -9,18 +9,31 @@ class App extends React.Component {
         this.state = {
             employees: [],
             id: null,
-            isEmployeeFormVisible: false
+            isEmployeeFormVisible: false,
+            selectedIndex: null,
+            selectedRow: null
         };
         this.handleSave = this.handleSave.bind(this);
         this.handleEmployeeDelete = this.handleEmployeeDelete.bind(this);
         this.getEmployees = this.getEmployees.bind(this);
         this.openEmployeeForm = this.openEmployeeForm.bind(this)
         this.closeEmployeeForm = this.closeEmployeeForm.bind(this);
+        this.deselectRow = this.deselectRow.bind(this);
     }
 
     componentWillMount = () => {
         this.getEmployees()
+        document.addEventListener('click', this.deselectRow)
     };
+
+    componentWillUnmount() {
+        document.removeEventListener('click', this.deselectRow)
+    }
+
+    deselectRow = function (e) {
+        if (!['rt-td', 'row-modifier'].includes(e.target.className) && !this.state.isEmployeeFormVisible)
+            this.setState({selectedIndex: null, selectedId: null})
+    }
 
     getEmployees = function () {
         fetch('http://localhost:8080/api/employees')
@@ -45,8 +58,8 @@ class App extends React.Component {
             })
     };
 
-    handleEmployeeDelete = function (event, row) {
-        let confirm = window.confirm(`Are you sure you want to delete employee ${row.name} with id ${row.id}?`);
+    handleEmployeeDelete = function (row) {
+        let confirm = window.confirm(`Are you sure you want to delete employee: ${row.name} with id ${row.id}?`);
         if (confirm)
             fetch(`http://localhost:8080/api/employees/${row.id}`, {method: "DELETE"})
                 .then(() => this.getEmployees());
@@ -56,10 +69,9 @@ class App extends React.Component {
         this.setState({isEmployeeFormVisible: false})
     };
 
-    openEmployeeForm = function () {
-        this.setState({id: null, isEmployeeFormVisible: true})
+    openEmployeeForm = function (row = null) {
+        this.setState({id: row ? row.id : null, isEmployeeFormVisible: true})
     };
-
 
     render() {
         const {
@@ -97,29 +109,46 @@ class App extends React.Component {
                 accessor: 'assigned',
                 Cell: props => <span>{props.value ? "Yes" : "No"}</span>,
             },
-            {
-                Header: '',
-                id: 'edit-button',
-                Cell: ({row}) => <button onClick={() => {
-                    this.setState({id: row.id, isEmployeeFormVisible: true})
-
-                }
-                }>Edit</button>
-            },
-            {
-                Header: '',
-                id: 'delete-button',
-                Cell: ({row}) => <button onClick={(e) => this.handleEmployeeDelete(e, row)}>X</button>
-            }
         ]
         return (
             <div className="App">
                 <h1>Plexxis Employees</h1>
-                <button onClick={this.openEmployeeForm}>Add New Employee</button>
-                <ReactTable data={employees} columns={columns} defaultPageSize={10}/>
+                <button onClick={() => this.openEmployeeForm(null)}>
+                    Add New
+                </button>
+                <button className={'row-modifier'}
+                        disabled={this.state.selectedIndex === null}
+                        onClick={() => this.openEmployeeForm(this.state.selectedRow)}>
+                    Edit
+                </button>
+                <button className={'row-modifier'}
+                        disabled={this.state.selectedIndex === null}
+                        onClick={() => this.handleEmployeeDelete(this.state.selectedRow)}>
+                    Delete
+                </button>
+                <ReactTable data={employees} columns={columns} defaultPageSize={10}
+                            getTrProps={(state, rowInfo) => {
+                                if (rowInfo && rowInfo.row) {
+                                    return {
+                                        onClick: (e) => {
+                                            this.setState({
+                                                selectedIndex: rowInfo.index,
+                                                selectedRow: rowInfo.row
+                                            })
+                                        },
+                                        style: {
+                                            background: rowInfo.index === this.state.selectedIndex ? '#00afec' : 'white',
+                                            color: rowInfo.index === this.state.selectedIndex ? 'white' : 'black'
+                                        }
+                                    }
+                                } else {
+                                    return {}
+                                }
+                            }}
+                />
                 {
                     this.state.isEmployeeFormVisible &&
-                    <EmployeeForm id={this.state.id} handleSave={this.handleSave} handleClose={this.closeEmployeeForm} />
+                    <EmployeeForm id={this.state.id} handleSave={this.handleSave} handleClose={this.closeEmployeeForm}/>
                 }
             </div>
         );
