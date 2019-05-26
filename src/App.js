@@ -8,12 +8,14 @@ class App extends React.Component {
         super(props);
         this.state = {
             employees: [],
-            id: null
+            id: null,
+            isEmployeeFormVisible: false
         };
         this.handleSave = this.handleSave.bind(this);
         this.handleEmployeeDelete = this.handleEmployeeDelete.bind(this);
         this.getEmployees = this.getEmployees.bind(this);
-        this.handleAddNewEmployee = this.handleAddNewEmployee.bind(this)
+        this.openEmployeeForm = this.openEmployeeForm.bind(this)
+        this.closeEmployeeForm = this.closeEmployeeForm.bind(this);
     }
 
     componentWillMount = () => {
@@ -23,7 +25,8 @@ class App extends React.Component {
     getEmployees = function () {
         fetch('http://localhost:8080/api/employees')
             .then(response => response.json())
-            .then(employees => this.setState({employees}))
+            .then(employees => this.setState({employees, isEmployeeFormVisible: false}))
+
     }
 
     handleSave = function (employee) {
@@ -37,7 +40,9 @@ class App extends React.Component {
                 },
                 body: JSON.stringify(employee)
             })
-            .then(() => this.getEmployees());
+            .then(() => {
+                this.getEmployees()
+            })
     };
 
     handleEmployeeDelete = function (event, row) {
@@ -47,8 +52,12 @@ class App extends React.Component {
                 .then(() => this.getEmployees());
     };
 
-    handleAddNewEmployee = function () {
-        this.setState({id: null})
+    closeEmployeeForm = function () {
+        this.setState({isEmployeeFormVisible: false})
+    };
+
+    openEmployeeForm = function () {
+        this.setState({id: null, isEmployeeFormVisible: true})
     };
 
 
@@ -92,7 +101,8 @@ class App extends React.Component {
                 Header: '',
                 id: 'edit-button',
                 Cell: ({row}) => <button onClick={() => {
-                    this.setState({id: row.id})
+                    this.setState({id: row.id, isEmployeeFormVisible: true})
+
                 }
                 }>Edit</button>
             },
@@ -105,9 +115,12 @@ class App extends React.Component {
         return (
             <div className="App">
                 <h1>Plexxis Employees</h1>
-                <button onClick={this.handleAddNewEmployee}>Add New Employee</button>
+                <button onClick={this.openEmployeeForm}>Add New Employee</button>
                 <ReactTable data={employees} columns={columns} defaultPageSize={10}/>
-                <EmployeeForm id={this.state.id} handleSave={this.handleSave}/>
+                {
+                    this.state.isEmployeeFormVisible &&
+                    <EmployeeForm id={this.state.id} handleSave={this.handleSave} handleClose={this.closeEmployeeForm} />
+                }
             </div>
         );
     }

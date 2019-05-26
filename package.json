@@ -12,7 +12,8 @@
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-scripts": "1.1.4",
-    "react-table": "^6.10.0"
+    "react-table": "^6.10.0",
+    "styled-components": "^4.2.0"
   },
   "scripts": {
     "start": "concurrently --kill-others \"npx nodemon server\" \"npm run start:react-app\"",
