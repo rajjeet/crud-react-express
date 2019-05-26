@@ -5,7 +5,7 @@ class EmployeeForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: null,
+            id: Math.floor(Math.random() * 10000),
             name: '',
             code: '',
             profession: '',
@@ -15,13 +15,28 @@ class EmployeeForm extends Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.loadEmployee = this.loadEmployee.bind(this);
+        this.handleReset = this.handleReset.bind(this);
     }
 
     componentWillMount() {
-        fetch('http://localhost:8080/api/employees')
+        this.loadEmployee(this.props.id)
+    }
+
+    componentWillUpdate(nextProps, nextState, nextContext) {
+        if (nextProps.id !== this.props.id)
+            this.loadEmployee(nextProps.id)
+    }
+
+    loadEmployee = function (id) {
+
+        if (id === null) {
+            return;
+        }
+
+        fetch(`http://localhost:8080/api/employees/${id}`)
             .then(response => response.json())
-            .then(employees => {
-                let employee = employees.find(employee => employee.id === this.props.id)
+            .then(employee => {
                 if (employee)
                     this.setState({
                         id: employee.id,
@@ -31,8 +46,23 @@ class EmployeeForm extends Component {
                         city: employee.city,
                         branch: employee.branch,
                         assigned: employee.assigned
-                    })
+                    });
+                else
+                    this.handleReset()
             })
+    };
+
+    handleReset = function (event) {
+        event && event.preventDefault()
+        this.setState({
+            id: Math.floor(Math.random() * 10000),
+            name: '',
+            code: '',
+            profession: '',
+            city: '',
+            branch: '',
+            assigned: false
+        })
     }
 
     handleChange = function (event) {
@@ -44,10 +74,10 @@ class EmployeeForm extends Component {
     };
 
     handleSubmit = function (event) {
-        event.preventDefault()
-        const {name, code, profession, city, branch, assigned} = this.state;
-        this.props.handleEmployeeChange({
-            id: this.props.id, name, code, profession, city, branch, assigned
+        event && event.preventDefault()
+        const {id, name, code, profession, city, branch, assigned} = this.state;
+        this.props.handleSave({
+            id, name, code, profession, city, branch, assigned
         })
     };
 
@@ -56,19 +86,27 @@ class EmployeeForm extends Component {
             <div>
                 <h3>Add Employee</h3>
                 <form>
-                    <label>Name: <input name={'name'} type={'text'} value={this.state.name} onChange={this.handleChange}/></label>
-                    <br />
-                    <label>Code: <input name={'code'} type={'text'} value={this.state.code} onChange={this.handleChange}/></label>
-                    <br />
-                    <label>Profession: <input name={'profession'} type={'text'} value={this.state.profession} onChange={this.handleChange}/></label>
-                    <br />
-                    <label>City: <input name={'city'} type={'text'} value={this.state.city} onChange={this.handleChange}/></label>
-                    <br />
-                    <label>Branch: <input name={'branch'} type={'text'} value={this.state.branch} onChange={this.handleChange}/></label>
-                    <br />
-                    <label>Assigned: <input name={'assigned'} type={'checkbox'} checked={this.state.assigned} onChange={this.handleChange}/></label>
-                    <br />
-                    <button name={'submit'} onClick={this.handleSubmit}>Add</button>
+                    <input type={'hidden'} name={'id'} value={this.state.id} />
+                    <label>Name: <input name={'name'} type={'text'} value={this.state.name}
+                                        onChange={this.handleChange}/></label>
+                    <br/>
+                    <label>Code: <input name={'code'} type={'text'} value={this.state.code}
+                                        onChange={this.handleChange}/></label>
+                    <br/>
+                    <label>Profession: <input name={'profession'} type={'text'} value={this.state.profession}
+                                              onChange={this.handleChange}/></label>
+                    <br/>
+                    <label>City: <input name={'city'} type={'text'} value={this.state.city}
+                                        onChange={this.handleChange}/></label>
+                    <br/>
+                    <label>Branch: <input name={'branch'} type={'text'} value={this.state.branch}
+                                          onChange={this.handleChange}/></label>
+                    <br/>
+                    <label>Assigned: <input name={'assigned'} type={'checkbox'} checked={this.state.assigned}
+                                            onChange={this.handleChange}/></label>
+                    <br/>
+                    <button onClick={this.handleSubmit}>Save</button>
+                    <button onClick={this.handleReset}>Reset</button>
                 </form>
             </div>
         );
@@ -76,8 +114,8 @@ class EmployeeForm extends Component {
 }
 
 EmployeeForm.propTypes = {
-    handleEmployeeChange: PropTypes.func.isRequired,
+    handleSave: PropTypes.func.isRequired,
     id: PropTypes.number
-}
+};
 
 export default EmployeeForm;
