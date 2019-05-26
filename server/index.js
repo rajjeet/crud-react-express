@@ -8,16 +8,17 @@ var corsOptions = {
   optionsSuccessStatus: 200
 }
 
-app.get('/api/employees', cors(corsOptions), (req, res) => {
+app.get('/api/employees', cors(corsOptions), (req, res, next) => {
   console.log('/api/employees');
   res.setHeader('Content-Type', 'application/json');
   res.status(200);
   res.send(JSON.stringify(employees, null, 2));
 })
 
-app.delete('/api/employees/:id', cors(corsOptions), (req, res) => {
-  console.log(`/api/employees/${req.params.id}`);
-  employees = employees.filter(employee => employee.id === req.params.id);
+app.delete('/api/employees/:id', cors(corsOptions), (req, res, next) => {
+  let id = parseInt(req.params.id);
+  console.log(`/api/employees/${id}`);
+  employees = employees.filter(employee => employee.id !== id);
   res.status(200);
   res.json({message: 'Successfully deleted!'});
 });
