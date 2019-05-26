@@ -79,14 +79,14 @@ const EmployeeListView = ({
 );
 
 EmployeeListView.propTypes = {
-    selectedIndex: PropTypes.string,
+    selectedIndex: PropTypes.number,
     selectedRow: PropTypes.object,
     getTrProps: PropTypes.func,
     employees: PropTypes.array,
     id: PropTypes.number,
     handleSave: PropTypes.func,
     closeEmployeeForm: PropTypes.func,
-    isEmployeeFormVisible: PropTypes.boolean,
+    isEmployeeFormVisible: PropTypes.bool,
     openEmployeeForm: PropTypes.func,
     handleEmployeeDelete: PropTypes.func
 

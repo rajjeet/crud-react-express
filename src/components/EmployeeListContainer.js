@@ -1,9 +1,5 @@
 import React from 'react';
-import ReactTable from 'react-table';
 import 'react-table/react-table.css'
-import EmployeeForm from "./EmployeeFormContainer";
-import styled from 'styled-components';
-import Button from "./Button";
 import EmployeeListView from "./EmployeeListView";
 
 class EmployeeListContainer extends React.Component {

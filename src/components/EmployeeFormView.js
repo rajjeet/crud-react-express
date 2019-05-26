@@ -79,7 +79,7 @@ EmployeeFormView.propTypes = {
     profession: PropTypes.string,
     city: PropTypes.string,
     branch: PropTypes.string,
-    assigned: PropTypes.boolean
+    assigned: PropTypes.bool
 };
 
 const StyledEmployeeFormView = styled(EmployeeFormView)`

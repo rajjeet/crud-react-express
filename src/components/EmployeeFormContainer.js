@@ -95,8 +95,9 @@ class EmployeeFormContainer extends Component {
 
     render() {
         return <EmployeeFormView
+            className={this.props.className}
             handleClose={this.props.handleClose}
-            handleReset={this.props.handleReset}
+            handleReset={this.handleReset}
             handleChange={this.handleChange}
             handleSubmit={this.handleSubmit}
             id={this.state.id}
