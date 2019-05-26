@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components';
-import Button from './Button'
+import EmployeeFormView from "./EmployeeFormView";
 
-class EmployeeForm extends Component {
+class EmployeeFormContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -94,77 +94,25 @@ class EmployeeForm extends Component {
     };
 
     render() {
-        return (
-            <div className={this.props.className} onClick={this.props.handleClose}>
-                <div onClick={e => e.stopPropagation()}>
-                    <div>
-                        <h3>Employee</h3>
-                        <Button onClick={this.props.handleClose}>X</Button>
-                    </div>
-                    <form onSubmit={this.handleSubmit}>
-                        <input type={'hidden'} name={'id'} value={this.state.id}/>
-                        <div>
-                            <label htmlFor={'name'}>Name: </label>
-                            <input name={'name'} type={'text'} value={this.state.name}
-                                   placeholder={'Enter the first and last name'}
-                                   onChange={this.handleChange}
-                                   required
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor={'code'}>Code: </label>
-                            <input name={'code'} type={'text'} value={this.state.code}
-                                   placeholder={'Enter the employee code'}
-                                   onChange={this.handleChange}
-                                   required
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor={'profession'}>Profession: </label>
-                            <input name={'profession'} type={'text'} value={this.state.profession}
-                                   placeholder={'Enter the current profession'}
-                                   onChange={this.handleChange}
-                                   required
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor={'city'}>City: </label>
-                            <input name={'city'} type={'text'} value={this.state.city}
-                                   placeholder={'Enter the residential city'}
-                                   onChange={this.handleChange}
-                                   required
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor={'branch'}>Branch: </label>
-                            <input name={'branch'} type={'text'} value={this.state.branch}
-                                   placeholder={'Enter the primary company branch'}
-                                   onChange={this.handleChange}
-                                   required
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor={'assigned'}>Assigned: </label>
-                            <input name={'assigned'} type={'checkbox'} checked={this.state.assigned}
-                                   onChange={this.handleChange}
-                            />
-                        </div>
-                        <Button type={'submit'} >Save</Button>
-                        <Button onClick={this.handleReset}>Reset</Button>
-                    </form>
-                </div>
-            </div>
-        );
+        return <EmployeeFormView
+            handleClose={this.props.handleClose}
+            handleReset={this.props.handleReset}
+            handleChange={this.handleChange}
+            handleSubmit={this.handleSubmit}
+            id={this.state.id}
+            name={this.state.name} code={this.state.code} profession={this.state.profession}
+            city={this.state.city} branch={this.state.branch} assigned={this.state.assigned}
+        />;
     }
 }
 
-EmployeeForm.propTypes = {
+EmployeeFormContainer.propTypes = {
     handleSave: PropTypes.func.isRequired,
     id: PropTypes.number,
     handleClose: PropTypes.func.isRequired
 };
 
-const StyledEmployeeForm = styled(EmployeeForm)`
+const StyledEmployeeForm = styled(EmployeeFormContainer)`
     
       transition: all .3s ease;
       width: 100vw;
@@ -259,8 +207,6 @@ const StyledEmployeeForm = styled(EmployeeForm)`
         margin: .5em;
       }
     }
-    
-    
     `;
 
 export default StyledEmployeeForm;
