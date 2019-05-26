@@ -18,16 +18,26 @@ class EmployeeForm extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.loadEmployee = this.loadEmployee.bind(this);
         this.handleReset = this.handleReset.bind(this);
+        this.onEsc = this.onEsc.bind(this);
     }
 
     componentWillMount() {
         this.loadEmployee(this.props.id)
+        document.addEventListener("keydown", this.onEsc)
     }
 
     componentWillUpdate(nextProps, nextState, nextContext) {
         if (nextProps.id !== this.props.id)
             this.loadEmployee(nextProps.id)
     }
+
+    componentWillUnmount() {
+        document.removeEventListener('keydown', this.onEsc)
+    }
+
+    onEsc = function (event) {
+        if (event.keyCode === 27) this.props.handleClose()
+    };
 
     loadEmployee = function (id) {
 
@@ -84,8 +94,8 @@ class EmployeeForm extends Component {
 
     render() {
         return (
-            <div className={this.props.className}>
-                <div>
+            <div className={this.props.className} onClick={this.props.handleClose}>
+                <div onClick={e => e.stopPropagation()}>
                     <div>
                         <h3>Employee</h3>
                         <button onClick={this.props.handleClose}>X</button>
@@ -197,6 +207,7 @@ const StyledEmployeeForm = styled(EmployeeForm)`
           box-sizing: border-box;
           width: 75%;
           font-size: 1.1em;
+          height: 2em;
           padding: .2em;
           border-radius: 5px;
           border: .7px solid darkgray;
