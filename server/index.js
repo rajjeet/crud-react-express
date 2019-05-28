@@ -4,7 +4,6 @@ const bodyParser = require('body-parser')
 const morgan = require('morgan');
 const db = require('./db');
 const indexRouter = require('./routes/index')
-const employeeRouter = require('./routes/employees')
 
 app.use(bodyParser.json())
 app.use(morgan('tiny'))

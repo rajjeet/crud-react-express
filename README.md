@@ -1,31 +1,30 @@
-# Plexxis Interview Exercise
-## Requirements
-Create a simple but __impressive__ (looks good, works well, has intuitive design, etc.) CRUD application that can do the following:
+## Notes
 
-1) Retrieve employees from a REST API  
-2) Display the employees in a React application  
-3) Has UI mechanisms for creating and deleting employees  
-4) Has API endpoints for creating and deleting employees  
-5) Edit your version of the `README.md` file to explain to us what things you did, where you focussed your effort, etc.
+### General
+* Full CRUD is implemented for employee model
+* Most of the field for the employee model are option-based (selected from a pick list)
+* Limitations:
+    * no testing 
+    * no linting
+    * ideally should be containerized for ease of portability
 
-*Read over the `Bonus` objectives and consider tackling those items as well*
+### Frontend
+* see ```src``` folder under the project root
+* components are styled using ```styled-components```
+    * css is self-contained in each component
+* The employee list and form is broken into container and view
+    * container holds state and core logic
+    * view has presentation elements and logic 
+* used basic HTML form validation
+* Limitation: transaction success/failure is not implemented  
 
-## Bonus (Highly Encouraged)
+### Backend 
+* see ```server``` folder under the project root
+* ```controller``` holds request/response processing logic
+* ```dal```  holds data access code to MySQL DB
+* ```route``` holds express routes 
+* setting up the db:
+    * run the ```server/setup.sql``` on your local MySQL to setup DB 
+    * modify ```server/dbconfig.js``` to value specific to your machine  
+* using ```morgan``` middleware for logging api requests
 
-1) Use a relational database to store the data (SQLite, MariaDB, Postgres)  
-2) UI mechanisms to edit/update employee data  
-3) Add API endpoint to update employee data  
-4) Use [React Table](https://react-table.js.org)  
-
-## Getting Started
-This project was bootstrapped with [Create React EmployeeListContainer](https://github.com/facebookincubator/create-react-app). The front-end app runs off localhost:3000. The REST API is located in the /server folder and runs off localhost:8080. The data is being served from a JSON file located in the /server/data folder. Run `npm start` to start both servers.
-
-## Getting it Done
-* You are free to use whatever libraries that you want. Be prepared to defend your decisions.
-* There is no time limit. Use as little or as much time as is necessary to showcase your abilities.
-* You should fork or clone our repository into your own repository.
-  * Send us the link when you are done the exercise (pglinker at plexxis dot com).
-
-If you do well on the test, we will bring you in for an interview. Your test results will be used as talking points.  
-
- __This is your chance to amaze us with your talent!__
