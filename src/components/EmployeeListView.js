@@ -6,6 +6,20 @@ import styled from 'styled-components';
 import Button from "./Button";
 import PropTypes from 'prop-types';
 
+const nullModifier = props => props.value || <span style={{color: 'gray', fontStyle: 'italic'}}>&lt;none&gt;</span>;
+
+const ButtonCell = ({color, text}) => {
+    return <Button style={{
+        backgroundColor: color,
+        color: "white",
+        border: "none",
+        fontWeight: "bold",
+        margin: 0,
+        fontSize: ".8em",
+        padding: ".3em"
+    }}>{text}</Button>;
+}
+
 const columns = [
     {
         Header: 'Id',
@@ -16,33 +30,40 @@ const columns = [
     {
         Header: 'Name',
         accessor: 'name',
-        headerClassName: 'table-header'
+        headerClassName: 'table-header',
+        Cell: nullModifier
     },
     {
         Header: 'Code',
         accessor: 'code',
-        headerClassName: 'table-header'
+        headerClassName: 'table-header',
+        Cell: nullModifier
     },
     {
         Header: 'Profession',
         accessor: 'profession',
-        headerClassName: 'table-header'
+        headerClassName: 'table-header',
+        Cell: nullModifier
     },
     {
         Header: 'City',
         accessor: 'city',
-        headerClassName: 'table-header'
+        headerClassName: 'table-header',
+        Cell: nullModifier
     },
     {
         Header: 'Branch',
         accessor: 'branch',
-        headerClassName: 'table-header'
+        headerClassName: 'table-header',
+        Cell: nullModifier
     },
     {
         id: 'assigned',
         Header: 'Assigned',
         accessor: 'assigned',
-        Cell: props => <span>{props.value ? "Yes" : "No"}</span>,
+        Cell: props => props.value ?
+            <ButtonCell color={'seagreen'} text={'Yes'}/>
+            : <ButtonCell color={'darkred'} text={'No'}/>,
         headerClassName: 'table-header',
         width: 100
     },

@@ -38,10 +38,9 @@ class EmployeeListContainer extends React.Component {
     }
 
     handleSave = function (employee) {
-        let method = this.state.employees.find(e => e.id === employee.id) ? 'PUT' : 'POST';
-        fetch(`http://localhost:8080/api/employees/${employee.id}`,
+        fetch(`http://localhost:8080/api/employees/${employee.id || ''}`,
             {
-                method: method,
+                method: employee.id ? 'PUT' : 'POST',
                 mode: "cors",
                 headers: {
                     'Content-Type': 'application/json'

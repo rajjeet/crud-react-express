@@ -7,22 +7,29 @@ class EmployeeFormContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: Math.floor(Math.random() * 10000),
+            id: '',
             name: '',
-            code: '',
-            profession: '',
-            city: '',
-            branch: '',
-            assigned: false
+            code: 0,
+            profession: 0,
+            city: 0,
+            branch: 0,
+            assigned: false,
+            codes: [],
+            professions: [],
+            cities: [],
+            branches: []
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.loadEmployee = this.loadEmployee.bind(this);
         this.handleReset = this.handleReset.bind(this);
+        this.loadSelectOptions = this.loadSelectOptions.bind(this);
+        this.fetchOptions = this.fetchOptions.bind(this);
         this.onEsc = this.onEsc.bind(this);
     }
 
     componentWillMount() {
+        this.loadSelectOptions();
         this.loadEmployee(this.props.id)
         document.addEventListener("keydown", this.onEsc)
     }
@@ -38,6 +45,21 @@ class EmployeeFormContainer extends Component {
 
     onEsc = function (event) {
         if (event.keyCode === 27) this.props.handleClose()
+    };
+
+    fetchOptions = function (name) {
+        fetch(`http://localhost:8080/api/options/${name}`)
+            .then(response => response.json())
+            .then(options => this.setState({[name]: options}))
+            .catch(err => console.error(err))
+    };
+
+    loadSelectOptions = function () {
+        const options = ['codes', 'professions', 'cities', 'branches'];
+        options.forEach(option => {
+            this.fetchOptions(option);
+        })
+
     };
 
     loadEmployee = function (id) {
@@ -88,12 +110,19 @@ class EmployeeFormContainer extends Component {
     handleSubmit = function (event) {
         event && event.preventDefault()
         const {id, name, code, profession, city, branch, assigned} = this.state;
+
         this.props.handleSave({
-            id, name, code, profession, city, branch, assigned
+            id, name,
+            code: parseInt(code, 10) || null,
+            profession: parseInt(profession, 10) || null,
+            city: parseInt(city, 10) || null,
+            branch: parseInt(branch, 10) || null,
+            assigned
         })
     };
 
     render() {
+
         return <EmployeeFormView
             className={this.props.className}
             handleClose={this.props.handleClose}
@@ -101,8 +130,15 @@ class EmployeeFormContainer extends Component {
             handleChange={this.handleChange}
             handleSubmit={this.handleSubmit}
             id={this.state.id}
-            name={this.state.name} code={this.state.code} profession={this.state.profession}
-            city={this.state.city} branch={this.state.branch} assigned={this.state.assigned}
+            name={this.state.name}
+            code={parseInt(this.state.code || 0, 10)}
+            profession={parseInt(this.state.profession || 0, 10)}
+            city={parseInt(this.state.city || 0, 10)}
+            branch={parseInt(this.state.branch || 0, 10)}
+            assigned={!!this.state.assigned}
+            codes={this.state.codes} professions={this.state.professions}
+            cities={this.state.cities}
+            branches={this.state.branches}
         />;
     }
 }

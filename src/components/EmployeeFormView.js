@@ -2,10 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components';
 import Button from './Button'
+import {OptionSelectInput} from "./OptionSelectInput";
 
 const EmployeeFormView = ({
                               className, handleClose, handleReset, handleChange, handleSubmit,
-                              id, name, code, profession, city, branch, assigned
+                              id, name, code, profession, city, branch, assigned, codes, professions, cities, branches
                           }) => (
     <div className={className} onClick={handleClose}>
         <div onClick={e => e.stopPropagation()}>
@@ -23,38 +24,10 @@ const EmployeeFormView = ({
                            required
                     />
                 </div>
-                <div>
-                    <label htmlFor={'code'}>Code: </label>
-                    <input name={'code'} type={'text'} value={code}
-                           placeholder={'Enter the employee code'}
-                           onChange={handleChange}
-                           required
-                    />
-                </div>
-                <div>
-                    <label htmlFor={'profession'}>Profession: </label>
-                    <input name={'profession'} type={'text'} value={profession}
-                           placeholder={'Enter the current profession'}
-                           onChange={handleChange}
-                           required
-                    />
-                </div>
-                <div>
-                    <label htmlFor={'city'}>City: </label>
-                    <input name={'city'} type={'text'} value={city}
-                           placeholder={'Enter the residential city'}
-                           onChange={handleChange}
-                           required
-                    />
-                </div>
-                <div>
-                    <label htmlFor={'branch'}>Branch: </label>
-                    <input name={'branch'} type={'text'} value={branch}
-                           placeholder={'Enter the primary company branch'}
-                           onChange={handleChange}
-                           required
-                    />
-                </div>
+                <OptionSelectInput name={'code'} value={code} options={codes} handleChange={handleChange} />
+                <OptionSelectInput name={'profession'} value={profession} options={professions} handleChange={handleChange} />
+                <OptionSelectInput name={'city'} value={city} options={cities} handleChange={handleChange} />
+                <OptionSelectInput name={'branch'} value={branch} options={branches} handleChange={handleChange} />
                 <div>
                     <label htmlFor={'assigned'}>Assigned: </label>
                     <input name={'assigned'} type={'checkbox'} checked={assigned}
@@ -73,13 +46,17 @@ EmployeeFormView.propTypes = {
     handleReset: PropTypes.func.isRequired,
     handleChange: PropTypes.func.isRequired,
     handleClose: PropTypes.func.isRequired,
-    id: PropTypes.number,
+    id: PropTypes.any,
     name: PropTypes.string,
-    code: PropTypes.string,
-    profession: PropTypes.string,
-    city: PropTypes.string,
-    branch: PropTypes.string,
-    assigned: PropTypes.bool
+    code: PropTypes.number,
+    profession: PropTypes.number,
+    city: PropTypes.number,
+    branch: PropTypes.number,
+    assigned: PropTypes.bool,
+    codes: PropTypes.array,
+    professions: PropTypes.array,
+    cities: PropTypes.array,
+    branches: PropTypes.array
 };
 
 const StyledEmployeeFormView = styled(EmployeeFormView)`
@@ -122,7 +99,8 @@ const StyledEmployeeFormView = styled(EmployeeFormView)`
            box-sizing: border-box;
            vertical-align: center;
         }
-        input {
+
+        input, select {
           box-sizing: border-box;
           width: 75%;
           font-size: 1.1em;
@@ -130,6 +108,7 @@ const StyledEmployeeFormView = styled(EmployeeFormView)`
           padding: .2em;
           border-radius: 5px;
           border: .7px solid darkgray;
+          background-color: white;
         }
         input[type="checkbox"]{
           width: 30px;
