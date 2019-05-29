@@ -22,8 +22,8 @@ export class EmployeeListContainer extends React.Component {
         this.getTrProps = this.getTrProps.bind(this);
     }
 
-    componentDidMount = () => {
-        this.getEmployees()
+    async componentDidMount () {
+        await this.getEmployees();
         document.addEventListener('click', this.deselectRow)
     };
 
@@ -35,8 +35,7 @@ export class EmployeeListContainer extends React.Component {
         axios.get('http://localhost:8080/api/employees')
             .then(response => response.data)
             .then(employees => this.setState({employees, isEmployeeFormVisible: false}))
-
-    }
+    };
 
     handleSave = function (employee) {
         fetch(`http://localhost:8080/api/employees/${employee.id || ''}`,

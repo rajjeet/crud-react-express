@@ -2,8 +2,12 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components';
 import EmployeeFormView from "./EmployeeFormView";
+import axios from 'axios';
 
-class EmployeeFormContainer extends Component {
+export const options = ['codes', 'professions', 'cities', 'branches'];
+
+export class EmployeeFormContainer extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -28,76 +32,6 @@ class EmployeeFormContainer extends Component {
         this.onEsc = this.onEsc.bind(this);
     }
 
-    componentWillMount() {
-        this.loadSelectOptions();
-        this.loadEmployee(this.props.id)
-        document.addEventListener("keydown", this.onEsc)
-    }
-
-    componentWillUpdate(nextProps, nextState, nextContext) {
-        if (nextProps.id !== this.props.id)
-            this.loadEmployee(nextProps.id)
-    }
-
-    componentWillUnmount() {
-        document.removeEventListener('keydown', this.onEsc)
-    }
-
-    onEsc = function (event) {
-        if (event.keyCode === 27) this.props.handleClose()
-    };
-
-    fetchOptions = function (name) {
-        fetch(`http://localhost:8080/api/options/${name}`)
-            .then(response => response.json())
-            .then(options => this.setState({[name]: options}))
-            .catch(err => console.error(err))
-    };
-
-    loadSelectOptions = function () {
-        const options = ['codes', 'professions', 'cities', 'branches'];
-        options.forEach(option => {
-            this.fetchOptions(option);
-        })
-
-    };
-
-    loadEmployee = function (id) {
-
-        if (id === null) {
-            return;
-        }
-
-        fetch(`http://localhost:8080/api/employees/${id}`)
-            .then(response => response.json())
-            .then(employee => {
-                if (employee)
-                    this.setState({
-                        id: employee.id,
-                        name: employee.name,
-                        code: employee.code,
-                        profession: employee.profession,
-                        city: employee.city,
-                        branch: employee.branch,
-                        assigned: employee.assigned
-                    });
-                else
-                    this.handleReset()
-            })
-    };
-
-    handleReset = function (event) {
-        event && event.preventDefault()
-        this.setState({
-            id: Math.floor(Math.random() * 10000),
-            name: '',
-            code: '',
-            profession: '',
-            city: '',
-            branch: '',
-            assigned: false
-        })
-    }
 
     handleChange = function (event) {
         let name = event.target.name;
@@ -120,6 +54,79 @@ class EmployeeFormContainer extends Component {
             assigned
         })
     };
+
+    handleReset = function (event) {
+        event && event.preventDefault()
+        this.setState({
+            id: '',
+            name: '',
+            code: '',
+            profession: '',
+            city: '',
+            branch: '',
+            assigned: false
+        })
+    }
+
+
+    async componentDidMount() {
+        await this.loadSelectOptions();
+        await this.loadEmployee(this.props.id);
+        document.addEventListener("keydown", this.onEsc)
+    }
+
+    componentWillUpdate(nextProps, nextState, nextContext) {
+        if (nextProps.id !== this.props.id)
+            this.loadEmployee(nextProps.id)
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('keydown', this.onEsc)
+    }
+
+    onEsc = function (event) {
+        if (event.keyCode === 27) this.props.handleClose()
+    };
+
+    fetchOptions = function (name) {
+        axios.get(`http://localhost:8080/api/options/${name}`)
+            .then(response => response.data)
+            .then(options => this.setState({[name]: options}))
+            .catch(err => console.error(err))
+    };
+
+    loadSelectOptions = function () {
+        options.forEach(option => {
+            this.fetchOptions(option);
+        })
+
+    };
+
+
+    loadEmployee = function (id) {
+        if (id === null) {
+            return;
+        }
+        axios.get(`http://localhost:8080/api/employees/${id}`)
+            .then(response => response.data)
+            .then(employee => {
+                if (employee)
+                    this.setState({
+                        id: employee.id,
+                        name: employee.name,
+                        code: employee.code,
+                        profession: employee.profession,
+                        city: employee.city,
+                        branch: employee.branch,
+                        assigned: employee.assigned
+                    });
+                else
+                    this.handleReset()
+            })
+            .catch(err => console.error(err))
+    };
+
+
 
     render() {
 
