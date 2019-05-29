@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css'
-import EmployeeForm from "./EmployeeFormContainer";
+import EmployeeFormContainer from "./EmployeeFormContainer";
 import styled from 'styled-components';
 import Button from "./Button";
 import PropTypes from 'prop-types';
@@ -94,7 +94,7 @@ export const EmployeeListView = ({
         />
         {
             isEmployeeFormVisible &&
-            <EmployeeForm id={id} handleSave={handleSave} handleClose={closeEmployeeForm}/>
+            <EmployeeFormContainer id={id} handleSave={handleSave} handleClose={closeEmployeeForm}/>
         }
     </div>
 );
