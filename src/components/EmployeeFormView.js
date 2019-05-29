@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Button from './Button'
 import {OptionSelectInput} from "./OptionSelectInput";
 
-const EmployeeFormView = ({
+export const EmployeeFormView = ({
                               className, handleClose, handleReset, handleChange, handleSubmit,
                               id, name, code, profession, city, branch, assigned, codes, professions, cities, branches
                           }) => (

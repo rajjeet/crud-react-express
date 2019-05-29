@@ -69,7 +69,7 @@ const columns = [
     },
 ];
 
-const EmployeeListView = ({
+export const EmployeeListView = ({
                               className, selectedIndex, selectedRow, getTrProps,
                               employees, id, handleSave, closeEmployeeForm, isEmployeeFormVisible, openEmployeeForm,
                               handleEmployeeDelete

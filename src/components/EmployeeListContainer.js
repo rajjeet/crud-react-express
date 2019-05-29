@@ -1,8 +1,9 @@
 import React from 'react';
 import 'react-table/react-table.css'
 import EmployeeListView from "./EmployeeListView";
+import axios from 'axios';
 
-class EmployeeListContainer extends React.Component {
+export class EmployeeListContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -21,7 +22,7 @@ class EmployeeListContainer extends React.Component {
         this.getTrProps = this.getTrProps.bind(this);
     }
 
-    componentWillMount = () => {
+    componentDidMount = () => {
         this.getEmployees()
         document.addEventListener('click', this.deselectRow)
     };
@@ -31,8 +32,8 @@ class EmployeeListContainer extends React.Component {
     }
 
     getEmployees = function () {
-        fetch('http://localhost:8080/api/employees')
-            .then(response => response.json())
+        axios.get('http://localhost:8080/api/employees')
+            .then(response => response.data)
             .then(employees => this.setState({employees, isEmployeeFormVisible: false}))
 
     }

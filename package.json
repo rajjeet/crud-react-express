@@ -4,9 +4,12 @@
   "license": "None provided",
   "private": true,
   "dependencies": {
+    "axios": "^0.18.0",
     "body-parser": "^1.19.0",
     "concurrently": "^3.6.0",
     "cors": "^2.8.4",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.13.2",
     "express": "^4.16.3",
     "morgan": "^1.9.1",
     "mysql": "^2.17.1",
@@ -14,6 +17,7 @@
     "react-dom": "^16.4.1",
     "react-scripts": "1.1.4",
     "react-table": "^6.10.0",
+    "react-test-renderer": "^16.8.6",
     "styled-components": "^4.2.0"
   },
   "scripts": {
@@ -26,6 +30,9 @@
     "custom:start": "concurrently --kill-others \"npm run custom:build\" \"npm run start\""
   },
   "devDependencies": {
+    "axios-mock-adapter": "^1.16.0",
+    "jest": "^24.8.0",
+    "jsdom": "^15.1.1",
     "nodemon": "^1.19.1"
   }
 }
