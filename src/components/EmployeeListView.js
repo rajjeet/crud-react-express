@@ -6,9 +6,9 @@ import styled from 'styled-components';
 import Button from "./Button";
 import PropTypes from 'prop-types';
 
-const nullModifier = props => props.value || <span style={{color: 'gray', fontStyle: 'italic'}}>&lt;none&gt;</span>;
+export const NullModifier = props => props.value || <span style={{color: 'gray', fontStyle: 'italic'}}>&lt;none&gt;</span>;
 
-const ButtonCell = ({color, text}) => {
+export const ButtonCell = ({color, text}) => {
     return <Button style={{
         backgroundColor: color,
         color: "white",
@@ -18,7 +18,9 @@ const ButtonCell = ({color, text}) => {
         fontSize: ".8em",
         padding: ".3em"
     }}>{text}</Button>;
-}
+};
+
+ButtonCell.displayName = 'ButtonCell';
 
 const columns = [
     {
@@ -31,31 +33,31 @@ const columns = [
         Header: 'Name',
         accessor: 'name',
         headerClassName: 'table-header',
-        Cell: nullModifier
+        Cell: NullModifier
     },
     {
         Header: 'Code',
         accessor: 'code',
         headerClassName: 'table-header',
-        Cell: nullModifier
+        Cell: NullModifier
     },
     {
         Header: 'Profession',
         accessor: 'profession',
         headerClassName: 'table-header',
-        Cell: nullModifier
+        Cell: NullModifier
     },
     {
         Header: 'City',
         accessor: 'city',
         headerClassName: 'table-header',
-        Cell: nullModifier
+        Cell: NullModifier
     },
     {
         Header: 'Branch',
         accessor: 'branch',
         headerClassName: 'table-header',
-        Cell: nullModifier
+        Cell: NullModifier
     },
     {
         id: 'assigned',
@@ -100,6 +102,7 @@ export const EmployeeListView = ({
 );
 
 EmployeeListView.propTypes = {
+    className: PropTypes.object,
     selectedIndex: PropTypes.number,
     selectedRow: PropTypes.object,
     getTrProps: PropTypes.func,

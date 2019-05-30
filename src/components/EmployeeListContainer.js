@@ -68,8 +68,11 @@ export class EmployeeListContainer extends React.Component {
     };
 
     deselectRow = function (e) {
-        if (!e.target.className.match(/rt-td|row-modifier/) && !this.state.isEmployeeFormVisible)
-            this.setState({selectedIndex: null, selectedId: null})
+        let isModifierButton = e.target.className.match(/row-modifier/);
+        let isTableRow = e.target.className.match(/rt-td/);
+        let isAnyOuterElementSelected = !(isModifierButton || isTableRow);
+        if (isAnyOuterElementSelected && !this.state.isEmployeeFormVisible)
+            this.setState({selectedIndex: null, selectedRow: null})
     };
 
     getTrProps = function (state, rowInfo) {

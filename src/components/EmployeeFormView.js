@@ -12,7 +12,7 @@ export const EmployeeFormView = ({
         <div onClick={e => e.stopPropagation()}>
             <div>
                 <h3>Employee</h3>
-                <Button onClick={handleClose}>&times;</Button>
+                <Button onClick={handleClose} className={'row-modifier'}>&times;</Button>
             </div>
             <form onSubmit={handleSubmit}>
                 <input type={'hidden'} name={'id'} value={id}/>

@@ -19,6 +19,8 @@ export const OptionSelectInput = ({name, value, options, handleChange}) => (
     </div>
 );
 
+OptionSelectInput.displayName = 'OptionSelectInput';
+
 OptionSelectInput.propTypes = {
     name: PropTypes.string,
     value: PropTypes.number,

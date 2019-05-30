@@ -1,4 +1,4 @@
-const employees = [
+export const employees = [
     {
         "id": 1,
         "name": "Rajjeet!",
@@ -15,11 +15,11 @@ const employees = [
         "profession": "Developer",
         "city": "Brampton",
         "branch": "Abacus",
-        "assigned": 1
+        "assigned": 0
     }
 ];
 
-const employee1 = {
+export const employee1 = {
     "id": 1,
     "name": "Rajjeet!",
     "code": 1,
