@@ -4,8 +4,8 @@
 * Full CRUD is implemented for employee model
 * Most of the field for the employee model are option-based (selected from a pick list)
 * Limitations:
-    * no testing 
-    * no linting
+    * no integration testing 
+    * no linting (Used IDE formatting)
     * ideally should be containerized for ease of portability
 
 ### Frontend
